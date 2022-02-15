@@ -1,2 +1,3 @@
-﻿  Main.cpp
-  Ethyl-core.vcxproj -> C:\Stuff\dev\cpp\Ethyl\bin\Win32\Debug\Ethyl-core.exe
+﻿Main.obj : error LNK2019: unresolved external symbol _glfwInit referenced in function _main
+C:\Stuff\dev\cpp\Ethyl\Dependencies\GLFW\lib-vc2019\glfw3.lib : warning LNK4272: library machine type 'x64' conflicts with target machine type 'x86'
+C:\Stuff\dev\cpp\Ethyl\bin\Win32\Debug\Ethyl-core.exe : fatal error LNK1120: 1 unresolved externals
