@@ -3,7 +3,10 @@
 
 namespace ethyl { namespace graphics {
 
-	void resizeViewport(GLFWwindow* window, int width, int height);
+	void resize_viewport(GLFWwindow* window, int width, int height);
+	void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
+	void mouse_callback(GLFWwindow* window, int button, int action, int mods);
+	void cursor_callback(GLFWwindow* window, double xpos, double ypos);
 
 	Window::Window(const char* title, int width, int height)
 	{
@@ -14,6 +17,16 @@ namespace ethyl { namespace graphics {
 		if (!init())
 		{
 			glfwTerminate();
+		}
+
+		for (int i = 0; i < MAX_KEYS; i++)
+		{
+			m_keys[i] = false;
+		}
+
+		for (int i = 0; i < MAX_BUTTONS; i++)
+		{
+			m_buttons[i] = false;
 		}
 	}
 	
@@ -39,7 +52,11 @@ namespace ethyl { namespace graphics {
 		}
 
 		glfwMakeContextCurrent(m_window);
-		glfwSetWindowSizeCallback(m_window, resizeViewport);
+		glfwSetWindowUserPointer(m_window, this);
+		glfwSetWindowSizeCallback(m_window, resize_viewport);
+		glfwSetKeyCallback(m_window, key_callback);
+		glfwSetMouseButtonCallback(m_window, mouse_callback);
+		glfwSetCursorPosCallback(m_window, cursor_callback);
 
 		if (glewInit() != GLEW_OK)
 		{
@@ -51,6 +68,31 @@ namespace ethyl { namespace graphics {
 		return true;
 	}
 
+	bool Window::isKeyPressed(unsigned int keycode) const
+	{
+		if (keycode >= MAX_KEYS)
+		{
+			LOG("KEY NOT FOUND");
+			return false;
+		}
+		return m_keys[keycode];
+	}
+
+	bool Window::isMousePressed(unsigned int button) const
+	{
+		if (button >= MAX_BUTTONS)
+		{
+			LOG("BUTTON NOT FOUND");
+			return false;
+		}
+		return m_buttons[button];
+	}
+
+	void Window::getMousePosition(double& x, double& y) const
+	{
+		x = mx;
+		y = my;
+	}
 
 	void Window::clear() const
 	{
@@ -71,9 +113,30 @@ namespace ethyl { namespace graphics {
 		return glfwWindowShouldClose(m_window) == 1;
 	}
 
-	void resizeViewport(GLFWwindow* window, int width, int height)
+	void resize_viewport(GLFWwindow* window, int width, int height)
 	{
 		LOG("Resizing viewport (" << width << ", " << height << ")");
 		glViewport(0, 0, width, height);
 	}
+
+	void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+	{
+		Window* win = (Window*)glfwGetWindowUserPointer(window);
+		win->m_keys[key] = action != GLFW_RELEASE;
+
+	}
+
+	void mouse_callback(GLFWwindow* window, int button, int action, int mods)
+	{
+		Window* win = (Window*)glfwGetWindowUserPointer(window);
+		win->m_buttons[button] = action != GLFW_RELEASE;
+	}
+
+	void cursor_callback(GLFWwindow* window, double xpos, double ypos)
+	{
+		Window* win = (Window*)glfwGetWindowUserPointer(window);
+		win->mx = xpos;
+		win->my = ypos;
+	}
+
 }}
