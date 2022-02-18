@@ -1,2 +1,7 @@
 ﻿  Main.cpp
+  window.cpp
+  vec2.cpp
+  vec3.cpp
+  vec4.cpp
+  Generating Code...
   Ethyl-core.vcxproj -> C:\Stuff\dev\cpp\Ethyl\Builds\x64\Debug\Ethyl-core.exe

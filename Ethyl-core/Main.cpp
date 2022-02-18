@@ -1,5 +1,6 @@
 #include "src/mgdutils.h"
 #include "src/graphics/window.h"
+#include "src/math/math.h"
 
 #define NEURAL_MODE	0
 
@@ -16,6 +17,18 @@ int main()
 	GLuint vao;
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
+
+	math::vec2 a(1.0f, 2.0f);
+	math::vec2 b(1.0f, 2.0f);
+
+	math::vec3 bbb(1.0f, 2.0f, 3.0f);
+	math::vec4 bbbb(1.0f, 2.0f, 3.0f, 4.0f);
+	//a *= b;
+
+	//vector.add(math::vec2(5, 2));
+	LOG((a != b));
+	LOG(bbb);
+	LOG(bbbb);
 
 	while (!window.isClosed())
 	{

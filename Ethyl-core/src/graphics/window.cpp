@@ -1,7 +1,7 @@
 #include "window.h"
 #include "../mgdutils.h"
 
-namespace ethyl { namespace graphics {
+namespace ethyl::graphics {
 
 	void resize_viewport(GLFWwindow* window, int width, int height);
 	void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
@@ -139,4 +139,4 @@ namespace ethyl { namespace graphics {
 		win->my = ypos;
 	}
 
-}}
+}

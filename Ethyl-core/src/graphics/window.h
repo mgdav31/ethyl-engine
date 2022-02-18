@@ -6,7 +6,7 @@
 #define MAX_KEYS	1024
 #define MAX_BUTTONS	32
 
-namespace ethyl { namespace graphics {
+namespace ethyl::graphics {
 
 	class Window
 	{
@@ -45,5 +45,4 @@ namespace ethyl { namespace graphics {
 		friend void cursor_callback(GLFWwindow* window, double xpos, double ypos);
 	};
 
-
-}}
+}
