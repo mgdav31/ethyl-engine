@@ -7,7 +7,6 @@ namespace ethyl::math {
         x = 0.0f;
         y = 0.0f;
     }
-
     vec2::vec2(const float& x, const float& y)
     {
         this->x = x;

@@ -1,127 +1,94 @@
 #include "src/mgdutils.h"
+#include "src/fileutils.h"
 #include "src/graphics/window.h"
+#include "src/graphics/shader.h"
 #include "src/math/math.h"
+#include "src/neural/neuron.h"
 
-#define NEURAL_MODE	0
+#define APP_TITLE		"Ethyl Engine"
+#define APP_VERSION		"v1.0a"
+#define APP_GAME_MODE	1
 
-#if NEURAL_MODE == 0
-int main()
+using namespace ethyl;
+
+void inputTests(ethyl::graphics::Window* window);
+
+int MainGame()
 {
-	using namespace ethyl;
-
-	graphics::Window window("Ethyl Engine v1.0a", 1200, 675);
+	LOG(APP_TITLE " " APP_VERSION);
+	graphics::Window window(APP_TITLE " " APP_VERSION, 1200, 675);
 	glClearColor(0.2f, 0.3f, 0.8f, 1.0f);
 
-	//LOG(glGetString(GL_VERSION));
+	math::mat4 position = math::mat4::translation(math::vec3(2, 3, 4));
 
-	GLuint vao;
-	glGenVertexArrays(1, &vao);
-	glBindVertexArray(vao);
+	math::vec4 tester = position.columns[3];
+	LOG(tester);
 
-	math::vec2 a(1.0f, 2.0f);
-	math::vec2 b(1.0f, 2.0f);
+	/*
+	GLfloat vertices[] =
+	{
+		-0.5f, -0.5f, 0.0f,
+		-0.5f,  0.5f, 0.0f,
+		 0.5f,  0.5f, 0.0f,
+		 0.5f,  0.5f, 0.0f,
+		 0.5f, -0.5f, 0.0f,
+		-0.5f, -0.5f, 0.0f
+	};
+	*/
 
-	math::vec3 bbb(1.0f, 2.0f, 3.0f);
-	math::vec4 bbbb(1.0f, 2.0f, 3.0f, 4.0f);
-	//a *= b;
+	GLfloat vertices[] =
+	{
+		0, 0, 0,
+		15, 0, 0, 
+		0, 15, 0
+	};
 
-	//vector.add(math::vec2(5, 2));
-	LOG((a != b));
-	LOG(bbb);
-	LOG(bbbb);
+	GLuint vbo;
+	glGenBuffers(1, &vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glEnableVertexAttribArray(0);
+
+	math::mat4 ortho = math::mat4::orthographic(9.0f, 16.0f, 0.0f, 0.0f, 1.0f, -1.0f);
+	LOG(ortho);
+	graphics::Shader shader("src/shaders/basic.vert", "src/shaders/basic.frag");
+	shader.enable();
+	LOG(shader.getId());
+	glUniformMatrix4fv(glGetUniformLocation(shader.getId(), "pr_matrix"), 1, GL_FALSE, ortho.elements);
 
 	while (!window.isClosed())
 	{
 		window.clear();
-		if (window.isKeyPressed(GLFW_KEY_A))
-		{
-			LOG("A PRESSED");
-		}
+		//inputTests(&window);
 
-		if (window.isMousePressed(GLFW_MOUSE_BUTTON_LEFT))
-		{
-			LOG("MOUSE PRESSED");
-		}
-
-		double x, y;
-		window.getMousePosition(x, y);
-		LOG(x << ", " << y);
-
-		glDrawArrays(GL_ARRAY_BUFFER, 0, 6);
+		glDrawArrays(GL_TRIANGLES, 0, 6);
 		window.update();
 	}
 
 	return 0;
 }
 
-# else
-// NEURAL PULSE
-
-#define PULSE_RATE_HZ	1
-#define MAX_FRIENDS		8
-
-class Neuron
+void inputTests(ethyl::graphics::Window* window)
 {
-private:
-	Neuron* m_friends[MAX_FRIENDS];
-	uint m_index;
-public:
-	Neuron();
+	if (window->isKeyPressed(GLFW_KEY_A))
+		LOG("A PRESSED");
 
-	void Fire(float pulse);
+	if (window->isMousePressed(GLFW_MOUSE_BUTTON_LEFT))
+		LOG("MOUSE PRESSED");
 
-	void Print();
-	bool AddFriend();
-};
-
-
-Neuron::Neuron()
-{
-	m_index = 0;
-	for (int i = 0; i < MAX_FRIENDS; i++)
-	{
-		m_friends[i] = nullptr;
-	}
+	double x, y;
+	window->getMousePosition(x, y);
+	LOG(x << ", " << y);
 }
 
-void Neuron::Print()
+int MainNeural()
 {
-	for (int i = 0; i < MAX_FRIENDS; i++)
-	{
-		LOG(m_friends[i]);
-	}
-}
-
-void Neuron::Fire(float pulse)
-{
-	for (int i = 0; i < MAX_FRIENDS; i++)
-	{
-		LOG(m_friends[i]);
-	}
-}
-
-bool Neuron::AddFriend()
-{
-	if (m_index >= MAX_FRIENDS)
-	{
-		return false;
-	}
-
-	Neuron *n = new Neuron();
-	m_friends[m_index] = n;
-	m_index += 1;
-	return true;
-}
-
-int main()
-{
-	using namespace ethyl;
-
-	graphics::Window window("Neural Pulse v1.0a", 1200, 675);
+	LOG(APP_TITLE " " APP_VERSION " - NEURAL");
+	graphics::Window window(APP_TITLE " " APP_VERSION " - NEURAL", 1200, 675);
 	glClearColor(0.2f, 0.3f, 0.8f, 1.0f);
 
-	Neuron *neuron = new Neuron();
-
+	neural::Neuron* neuron = new neural::Neuron();
 
 	while (!window.isClosed())
 	{
@@ -137,4 +104,11 @@ int main()
 	return 0;
 }
 
-# endif
+int main()
+{
+#if APP_GAME_MODE
+	return MainGame();
+#else
+	return MainNeural();
+#endif
+}
