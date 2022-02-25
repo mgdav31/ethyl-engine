@@ -36,16 +36,6 @@ namespace ethyl::math {
         return *this;
     }
 
-    mat4& mat4::operator*=(const mat4& other)
-    {
-        return multiply(other);
-    }
-
-    mat4 operator*(mat4 left, const mat4& right)
-    {
-        return left.multiply(right);
-    }
-
     mat4 mat4::orthographic(float top, float right, float bottom, float left, float near, float far)
     {
         mat4 result(1.0f);
@@ -120,6 +110,16 @@ namespace ethyl::math {
         result.elements[1 + 2*4] = (y * z * omc) - (x * s);
         result.elements[2 + 2*4] = (z * z * omc) + c;
         return result;
+    }
+
+    mat4& mat4::operator*=(const mat4& other)
+    {
+        return multiply(other);
+    }
+
+    mat4 operator*(mat4 left, const mat4& right)
+    {
+        return left.multiply(right);
     }
 
     std::ostream& operator<<(std::ostream& stream, const mat4& matrix)
