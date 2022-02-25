@@ -38,12 +38,12 @@ int MainGame()
 
 	GLfloat vertices[] =
 	{
-		4,  3,  0,
-		12, 3,  0, 
-		4,  6,  0,
-		4,  6,  0,
-		12, 6,  0,
-		12, 3,  0
+		0,  0,  0,
+		8, 0,  0, 
+		0,  3,  0,
+		0,  3,  0,
+		8, 3,  0,
+		8, 0,  0
 	};
 
 	GLuint vbo;
@@ -57,9 +57,12 @@ int MainGame()
 	LOG(ortho);
 	graphics::Shader shader("src/shaders/basic.vert", "src/shaders/basic.frag");
 	shader.enable();
-	LOG(shader.getId());
-	glUniformMatrix4fv(glGetUniformLocation(shader.getId(), "pr_matrix"), 1, GL_FALSE, ortho.elements);
+	shader.setUniformMat4("pr_matrix", ortho);
+	shader.setUniformMat4("ml_matrix", math::mat4::translation(math::vec3(4, 3, 0)));
+	//shader.setUniformMat4("ml_matrix", math::mat4::rotation(45.0f, math::vec3(0, 0, 1)));
 
+	shader.setUniform4f("col", math::vec4(0.4f, 0.3f, 1.0f, 1.0f));
+	shader.setUniform2f("light_pos", math::vec2(4.0f, 1.5f));
 	while (!window.isClosed())
 	{
 		window.clear();

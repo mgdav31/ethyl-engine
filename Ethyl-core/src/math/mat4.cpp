@@ -15,7 +15,6 @@ namespace ethyl::math {
         elements[3 + 3*4] = diagonal;
     }
 
-
     // OPENGL USES COLUMN MAJOR:
     //   Column Major means element indexes go from top-bot, then left-right
     //   Row Major would mean we fill indexes like we read/write.
@@ -111,6 +110,7 @@ namespace ethyl::math {
         result.elements[2 + 2*4] = (z * z * omc) + c;
         return result;
     }
+
 
     mat4& mat4::operator*=(const mat4& other)
     {
