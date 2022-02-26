@@ -18,6 +18,7 @@ namespace ethyl::math {
     // OPENGL USES COLUMN MAJOR:
     //   Column Major means element indexes go from top-bot, then left-right
     //   Row Major would mean we fill indexes like we read/write.
+    // TODO: I dont think this works. I believe our elements is getting written over.
     mat4& mat4::multiply(const mat4& other)
     {
         for (int y = 0; y < 4; y++)

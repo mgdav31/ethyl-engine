@@ -101,9 +101,16 @@ namespace ethyl::graphics {
 
 	void Window::update()
 	{
+		GLenum error = glGetError();
+		if (error != GL_NO_ERROR)
+		{
+			LOG("OpenGL Error:");
+			LOG(error);
+		}
+
 		glfwPollEvents();
 		//glfwGetFramebufferSize(m_window, &m_width, &m_height);
-		glViewport(0, 0, m_width, m_height);
+		//glViewport(0, 0, m_width, m_height);
 		glfwSwapBuffers(m_window);
 
 	}
@@ -138,6 +145,5 @@ namespace ethyl::graphics {
 		win->mx = xpos;
 		win->my = ypos;
 	}
-
 
 }

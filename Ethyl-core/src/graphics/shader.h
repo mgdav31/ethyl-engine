@@ -2,7 +2,6 @@
 
 #include <vector>
 #include <GL/glew.h>
-#include "../mgdutils.h"
 #include "../fileutils.h"
 #include "../math/math.h"
 
