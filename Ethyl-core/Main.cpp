@@ -9,16 +9,16 @@
 #include "src/math/math.h"
 #include "src/neural/neuron.h"
 
+#include <chrono>
+
 #define APP_TITLE		"Ethyl Engine"
 #define APP_VERSION		"v1.0a"
 #define APP_GAME_MODE	1
 
-#define TTint			int
-#define TTint_range		int
-
 using namespace ethyl;
 
 void inputTests(ethyl::graphics::Window* window);
+void drawSprite(graphics::Shader* shader, graphics::VArray* vao, graphics::IBuffer* ibo, const math::vec3& pos);
 
 int MainGame()
 {
@@ -28,7 +28,7 @@ int MainGame()
 
 	math::mat4 position = math::mat4::translation(math::vec3(2, 3, 4));
 	math::vec4 tester = position.columns[3];
-	LOG(tester);
+
 
 #if 0
 	/*
@@ -68,6 +68,14 @@ int MainGame()
 		8,	0,  0
 	};
 
+	GLfloat verticesB[] =
+	{
+		0,	0,  0,
+		0,	9,  0,
+		16,	9,  0,
+		16,	0,  0
+	};
+
 	GLushort indices[] =
 	{
 		0, 1, 2, 2, 3, 0
@@ -75,38 +83,39 @@ int MainGame()
 
 	GLfloat colorsA[] =
 	{
-		1, 0, 1, 0,
-		1, 0, 1, 0,
-		1, 0, 1, 0,
+		1, 0, 0, 0,
+		0, 1, 0, 0,
+		0, 0, 1, 0,
 		1, 0, 1, 0
 	};
 
 	GLfloat colorsB[] =
 	{
-		0, 1, 1, 0,
-		0, 1, 1, 0,
-		0, 1, 1, 0,
-		0, 1, 1, 0
+		0.0,	0.0,	0.0,	0.0,
+		0.3,	0.5,	0.4,	0.0,
+		0.3,	0.5,	0.4,	0.0,
+		0.0,	0.0,	0.0,	0.0
 	};
-
 
 	graphics::VArray sprite1, sprite2;
 	graphics::IBuffer ibo(indices, 6);
 
 	sprite1.addBuffer(new graphics::VBuffer(vertices, 4 * 3, 3), 0);
 	sprite1.addBuffer(new graphics::VBuffer(colorsA, 4 * 4, 4), 1);
-	sprite2.addBuffer(new graphics::VBuffer(vertices, 4 * 3, 3), 0);
+
+	sprite2.addBuffer(new graphics::VBuffer(verticesB, 4 * 3, 3), 0);
 	sprite2.addBuffer(new graphics::VBuffer(colorsB, 4 * 4, 4), 1);
 
 #endif
 
 	math::mat4 ortho = math::mat4::orthographic(9.0f, 16.0f, 0.0f, 0.0f, 1.0f, -1.0f);
 	LOG(ortho);
+
 	graphics::Shader shader("src/shaders/basic.vert", "src/shaders/basic.frag");
 	shader.enable();
 	shader.setUniformMat4("pr_matrix", ortho);
-	shader.setUniformMat4("ml_matrix", math::mat4::translation(math::vec3(4, 3, 0)));
-	//shader.setUniformMat4("ml_matrix", math::mat4::rotation(45.0f, math::vec3(0, 0, 1)));
+	//shader.setUniformMat4("ml_matrix", math::mat4::translation(math::vec3(4, 3, 0)));
+	shader.setUniformMat4("ml_matrix", math::mat4::rotation(45.0f, math::vec3(0, 0, 1)));
 
 	shader.setUniform4f("col", math::vec4(0.4f, 0.3f, 1.0f, 1.0f));
 	shader.setUniform2f("light_pos", math::vec2(4.0f, 1.5f));
@@ -118,19 +127,14 @@ int MainGame()
 #if 0
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 #else
-		sprite1.bind();
-		ibo.bind();
-		shader.setUniformMat4("ml_matrix", math::mat4::translation(math::vec3(4, 3, 0)));
-		glDrawElements(GL_TRIANGLES, ibo.getCount(), GL_UNSIGNED_SHORT, 0);
-		ibo.unbind();
-		sprite1.unbind();
 
-		sprite2.bind();
-		ibo.bind();
-		shader.setUniformMat4("ml_matrix", math::mat4::translation(math::vec3(0, 0, 0)));
-		glDrawElements(GL_TRIANGLES, ibo.getCount(), GL_UNSIGNED_SHORT, 0);
-		ibo.unbind();
-		sprite2.unbind();
+		drawSprite(&shader, &sprite2, &ibo, math::vec3(0, 0, 0));
+		drawSprite(&shader, &sprite1, &ibo, math::vec3(4, 3, 0));
+
+		double x, y;
+		window.getMousePosition(x, y);
+		shader.setUniform2f("light_pos", math::vec2(x / window.getWidth() * 16, 9 - (y / window.getHeight() * 9)));
+		//LOG(x << ", " << y);
 
 #endif
 		window.update();
@@ -146,10 +150,15 @@ void inputTests(ethyl::graphics::Window* window)
 
 	if (window->isMousePressed(GLFW_MOUSE_BUTTON_LEFT))
 		LOG("MOUSE PRESSED");
-
-	double x, y;
-	window->getMousePosition(x, y);
-	LOG(x << ", " << y);
+}
+void drawSprite(graphics::Shader* shader, graphics::VArray* vao, graphics::IBuffer* ibo, const math::vec3& pos)
+{
+	vao->bind();
+	ibo->bind();
+	shader->setUniformMat4("ml_matrix", math::mat4::translation(pos));
+	glDrawElements(GL_TRIANGLES, ibo->getCount(), GL_UNSIGNED_SHORT, 0);
+	ibo->unbind();
+	vao->unbind();
 }
 
 int MainNeural()
@@ -174,8 +183,23 @@ int MainNeural()
 	return 0;
 }
 
+void runTest()
+{
+	int MAX = 10;
+
+	auto t1 = TIME_NOW;
+	for (int i = 0; i < MAX; i++)
+	{
+		LOG("Iteration: " << i);
+	}
+	auto t2 = TIME_NOW;
+	LOG("Time: " << GET_TIME((t2 - t1), milliseconds) << "ms");
+}
+
 int main()
 {
+	//runTest();
+
 #if APP_GAME_MODE
 	return MainGame();
 #else

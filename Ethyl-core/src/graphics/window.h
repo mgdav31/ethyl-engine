@@ -10,14 +10,13 @@ namespace ethyl::graphics {
 
 	class Window
 	{
-	public:
+	public: 
 		//static Window* INSTANCE;
 
 	private:
 		const char* m_title;
 		int m_width, m_height;
 		GLFWwindow* m_window;
-		//bool closed;
 
 		bool m_keys[MAX_KEYS];
 		bool m_buttons[MAX_BUTTONS];
@@ -40,6 +39,10 @@ namespace ethyl::graphics {
 
 	private:
 		bool init();
+
+		// Friend methods allow for easy access to the private members when working
+		// with a variable of type Window. however they are not a part of the class
+		friend void resize_viewport(GLFWwindow* window, int width, int height);
 		friend void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 		friend void mouse_callback(GLFWwindow* window, int button, int action, int mods);
 		friend void cursor_callback(GLFWwindow* window, double xpos, double ypos);

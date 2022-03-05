@@ -11,12 +11,12 @@ namespace ethyl::graphics {
     {
         glDeleteProgram(m_shaderId);
     }
-   
+    
     GLuint Shader::load()
     {
-        uint program = glCreateProgram();
-        uint vertex = glCreateShader(GL_VERTEX_SHADER);
-        uint fragment = glCreateShader(GL_FRAGMENT_SHADER);
+        GLuint program = glCreateProgram();
+        GLuint vertex = glCreateShader(GL_VERTEX_SHADER);
+        GLuint fragment = glCreateShader(GL_FRAGMENT_SHADER);
 
         std::string vertSourceString = read_file(m_vertPath);
         std::string fragSourceString = read_file(m_fragPath);
@@ -28,7 +28,6 @@ namespace ethyl::graphics {
 
         int result;
         glGetShaderiv(vertex, GL_COMPILE_STATUS, &result);
-        //glShaderSource(vertex, 1, &vertSource, NULL);
         if (result == GL_FALSE)
         {
             int length;
@@ -45,7 +44,6 @@ namespace ethyl::graphics {
         glCompileShader(fragment);
 
         glGetShaderiv(fragment, GL_COMPILE_STATUS, &result);
-        //glShaderSource(fragment, 1, &fragSource, NULL);
         if (result == GL_FALSE)
         {
             int length;

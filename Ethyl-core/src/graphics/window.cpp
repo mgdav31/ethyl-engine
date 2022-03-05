@@ -104,15 +104,12 @@ namespace ethyl::graphics {
 		GLenum error = glGetError();
 		if (error != GL_NO_ERROR)
 		{
-			LOG("OpenGL Error:");
-			LOG(error);
+			LOG("OpenGL Error: " << error);
 		}
 
 		glfwPollEvents();
 		//glfwGetFramebufferSize(m_window, &m_width, &m_height);
-		//glViewport(0, 0, m_width, m_height);
 		glfwSwapBuffers(m_window);
-
 	}
 
 	bool Window::isClosed() const
@@ -120,17 +117,22 @@ namespace ethyl::graphics {
 		return glfwWindowShouldClose(m_window) == 1;
 	}
 
+
+	// We can see how this friend method creates a Window object called win
+	// and changes its width and height (private members).
 	void resize_viewport(GLFWwindow* window, int width, int height)
 	{
 		LOG("Resizing viewport (" << width << ", " << height << ")");
-		glViewport(0, 0, width, height);
+		Window* win = (Window*)glfwGetWindowUserPointer(window);
+		win->m_width = width;
+		win->m_height = height;
+		glViewport(0, 0, win->getWidth(), win->getHeight());
 	}
 
 	void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 	{
 		Window* win = (Window*)glfwGetWindowUserPointer(window);
 		win->m_keys[key] = action != GLFW_RELEASE;
-
 	}
 
 	void mouse_callback(GLFWwindow* window, int button, int action, int mods)

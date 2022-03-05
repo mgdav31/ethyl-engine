@@ -1,4 +1,5 @@
 #pragma once
+#pragma warning( disable : 26451 ) // [length + 1] gives arithmetic overflow
 
 #include <string>
 #include "mgdutils.h"
@@ -9,7 +10,7 @@ namespace ethyl {
         FILE* file = fopen(filepath, "rt");
         fseek(file, 0, SEEK_END);
         unsigned long length = ftell(file);
-        char* data = new char[length + (ulong)1]();
+        char* data = new char[length + 1]();
         fseek(file, 0, SEEK_SET);
         fread(data, 1, length, file);
         fclose(file);

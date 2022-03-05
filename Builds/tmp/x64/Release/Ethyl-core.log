@@ -1,5 +1,10 @@
 ﻿  Main.cpp
+C:\Stuff\dev\cpp\Ethyl\Ethyl-core\Main.cpp(106,13): error C2374: 'ortho': redefinition; multiple initialization
+C:\Stuff\dev\cpp\Ethyl\Ethyl-core\Main.cpp(105): message : see declaration of 'ortho'
+C:\Stuff\dev\cpp\Ethyl\Ethyl-core\Main.cpp(142,64): warning C4244: 'argument': conversion from 'double' to 'const float', possible loss of data
+C:\Stuff\dev\cpp\Ethyl\Ethyl-core\Main.cpp(142,56): warning C4244: 'argument': conversion from 'double' to 'const float', possible loss of data
   ibuffer.cpp
+  varray.cpp
   vbuffer.cpp
   shader.cpp
   window.cpp
@@ -8,11 +13,3 @@
   vec3.cpp
   vec4.cpp
   neuron.cpp
-LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
-glfw3.lib(context.obj) : error LNK2001: unresolved external symbol __imp___stdio_common_vsscanf
-glfw3.lib(window.obj) : error LNK2001: unresolved external symbol __imp_strncpy
-glfw3.lib(input.obj) : error LNK2001: unresolved external symbol __imp_strncpy
-glfw3.lib(monitor.obj) : error LNK2001: unresolved external symbol __imp_strncpy
-glfw3.lib(win32_joystick.obj) : error LNK2001: unresolved external symbol __imp_strncpy
-glfw3.lib(input.obj) : error LNK2001: unresolved external symbol __imp_strspn
-C:\Stuff\dev\cpp\Ethyl\Builds\x64\Release\Ethyl-core.exe : fatal error LNK1120: 3 unresolved externals

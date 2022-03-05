@@ -5,8 +5,10 @@
 #include <thread>
 
 #define LOG(x)	std::cout << x << std::endl;
+#define TIME_NOW		std::chrono::high_resolution_clock::now()
+#define GET_TIME(x, y)	std::chrono::duration_cast<std::chrono::y>(x).count()
 #define uint	unsigned int
-#define ulong   uint64_t
+
 
 namespace ethyl {
     inline void system_sleep(uint ms)
