@@ -1,5 +1,10 @@
 #include "VArray.h"
 
+/*
+    TODO: Program does not store the buffers, but is trying to delete them in
+      the destructor.
+*/
+
 namespace ethyl::graphics {
     VArray::VArray()
     {

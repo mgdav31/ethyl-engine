@@ -3,8 +3,15 @@ c:\stuff\dev\cpp\ethyl\builds\tmp\x64\debug\vc142.idb
 c:\stuff\dev\cpp\ethyl\builds\tmp\x64\debug\vec4.obj
 c:\stuff\dev\cpp\ethyl\builds\tmp\x64\debug\vec3.obj
 c:\stuff\dev\cpp\ethyl\builds\tmp\x64\debug\vec2.obj
-c:\stuff\dev\cpp\ethyl\builds\tmp\x64\debug\window.obj
 c:\stuff\dev\cpp\ethyl\builds\tmp\x64\debug\main.obj
+c:\stuff\dev\cpp\ethyl\builds\tmp\x64\debug\window.obj
+c:\stuff\dev\cpp\ethyl\builds\tmp\x64\debug\neuron.obj
+c:\stuff\dev\cpp\ethyl\builds\tmp\x64\debug\mat4.obj
+c:\stuff\dev\cpp\ethyl\builds\tmp\x64\debug\shader.obj
+c:\stuff\dev\cpp\ethyl\builds\tmp\x64\debug\vbuffer.obj
+c:\stuff\dev\cpp\ethyl\builds\tmp\x64\debug\ibuffer.obj
+c:\stuff\dev\cpp\ethyl\builds\tmp\x64\debug\varray.obj
+c:\stuff\dev\cpp\ethyl\builds\tmp\x64\debug\simple2drenderer.obj
 c:\stuff\dev\cpp\ethyl\builds\x64\debug\ethyl-core.exe
 c:\stuff\dev\cpp\ethyl\builds\tmp\x64\debug\ethyl-core.ilk
 c:\stuff\dev\cpp\ethyl\builds\x64\debug\ethyl-core.pdb

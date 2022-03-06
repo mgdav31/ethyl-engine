@@ -168,6 +168,7 @@
     <ClCompile Include="src\graphics\buffers\ibuffer.cpp" />
     <ClCompile Include="src\graphics\buffers\varray.cpp" />
     <ClCompile Include="src\graphics\buffers\vbuffer.cpp" />
+    <ClCompile Include="src\graphics\simple2DRenderer.cpp" />
     <ClCompile Include="src\graphics\shader.cpp" />
     <ClCompile Include="src\graphics\window.cpp" />
     <ClCompile Include="src\math\mat4.cpp" />
@@ -181,7 +182,10 @@
     <ClInclude Include="src\graphics\buffers\ibuffer.h" />
     <ClInclude Include="src\graphics\buffers\varray.h" />
     <ClInclude Include="src\graphics\buffers\vbuffer.h" />
+    <ClInclude Include="src\graphics\renderable2D.h" />
+    <ClInclude Include="src\graphics\renderer2D.h" />
     <ClInclude Include="src\graphics\shader.h" />
+    <ClInclude Include="src\graphics\simple2DRenderer.h" />
     <ClInclude Include="src\graphics\window.h" />
     <ClInclude Include="src\math\mat4.h" />
     <ClInclude Include="src\math\math.h" />

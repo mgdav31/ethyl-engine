@@ -1,2 +1,4 @@
-﻿  shader.cpp
+﻿  Main.cpp
+C:\Stuff\dev\cpp\Ethyl\Ethyl-core\Main.cpp(53,77): warning C4244: 'argument': conversion from 'double' to 'const float', possible loss of data
+C:\Stuff\dev\cpp\Ethyl\Ethyl-core\Main.cpp(53,69): warning C4244: 'argument': conversion from 'double' to 'const float', possible loss of data
   Ethyl-core.vcxproj -> C:\Stuff\dev\cpp\Ethyl\Builds\x64\Debug\Ethyl-core.exe
